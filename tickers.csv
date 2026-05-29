@@ -1,0 +1,204 @@
+ticker,name,aliases
+DJT,Trump Media & Technology Group,Truth Social|TMTG
+AAPL,Apple Inc,Apple
+MSFT,Microsoft Corporation,Microsoft
+GOOGL,Alphabet Inc,Google|Alphabet
+GOOG,Alphabet Inc,
+AMZN,Amazon.com Inc,Amazon
+META,Meta Platforms,Meta|Facebook|Instagram|WhatsApp
+NVDA,NVIDIA Corporation,NVIDIA|Nvidia
+TSLA,Tesla Inc,Tesla
+NFLX,Netflix Inc,Netflix
+ORCL,Oracle Corporation,Oracle
+CRM,Salesforce Inc,Salesforce
+ADBE,Adobe Inc,Adobe
+INTC,Intel Corporation,Intel
+AMD,Advanced Micro Devices,AMD
+QCOM,Qualcomm Inc,Qualcomm
+CSCO,Cisco Systems,Cisco
+IBM,International Business Machines,IBM
+TXN,Texas Instruments,
+MU,Micron Technology,Micron
+AVGO,Broadcom Inc,Broadcom
+PLTR,Palantir Technologies,Palantir
+SNOW,Snowflake Inc,Snowflake
+UBER,Uber Technologies,Uber
+LYFT,Lyft Inc,Lyft
+ABNB,Airbnb Inc,Airbnb
+COIN,Coinbase Global,Coinbase
+MSTR,MicroStrategy,MicroStrategy|Strategy
+SQ,Block Inc,Block|Square
+PYPL,PayPal Holdings,PayPal
+SHOP,Shopify Inc,Shopify
+SPOT,Spotify Technology,Spotify
+PINS,Pinterest Inc,Pinterest
+SNAP,Snap Inc,Snapchat
+RBLX,Roblox Corporation,Roblox
+ROKU,Roku Inc,Roku
+ZM,Zoom Video Communications,Zoom
+DOCU,DocuSign Inc,DocuSign
+DKNG,DraftKings Inc,DraftKings
+PENN,PENN Entertainment,PENN
+JPM,JPMorgan Chase,JPMorgan|JP Morgan|Chase
+BAC,Bank of America,Bank of America|BofA
+WFC,Wells Fargo,Wells Fargo
+C,Citigroup Inc,Citigroup|Citibank|Citi
+GS,Goldman Sachs,Goldman Sachs|Goldman
+MS,Morgan Stanley,Morgan Stanley
+USB,U.S. Bancorp,
+PNC,PNC Financial Services,
+TFC,Truist Financial,Truist
+SCHW,Charles Schwab,Schwab
+BLK,BlackRock Inc,BlackRock
+AXP,American Express,American Express|Amex
+V,Visa Inc,Visa
+MA,Mastercard Inc,Mastercard
+COF,Capital One Financial,Capital One
+DFS,Discover Financial Services,Discover
+BRK.B,Berkshire Hathaway,Berkshire Hathaway|Berkshire|Buffett
+LMT,Lockheed Martin,Lockheed Martin|Lockheed
+RTX,RTX Corporation,Raytheon|RTX
+GD,General Dynamics,General Dynamics
+NOC,Northrop Grumman,Northrop Grumman|Northrop
+BA,Boeing Company,Boeing
+HII,Huntington Ingalls Industries,Huntington Ingalls
+LDOS,Leidos Holdings,Leidos
+LHX,L3Harris Technologies,L3Harris
+PLTR,Palantir Technologies,
+XOM,Exxon Mobil,Exxon|ExxonMobil
+CVX,Chevron Corporation,Chevron
+COP,ConocoPhillips,ConocoPhillips|Conoco
+OXY,Occidental Petroleum,Occidental
+SLB,Schlumberger NV,Schlumberger
+EOG,EOG Resources,
+PSX,Phillips 66,Phillips 66
+VLO,Valero Energy,Valero
+MPC,Marathon Petroleum,Marathon Petroleum
+HAL,Halliburton Company,Halliburton
+BP,BP plc,BP
+SHEL,Shell plc,Shell
+F,Ford Motor Company,Ford
+GM,General Motors,General Motors|GM
+STLA,Stellantis NV,Stellantis|Chrysler|Jeep|Dodge
+RIVN,Rivian Automotive,Rivian
+LCID,Lucid Group,Lucid Motors|Lucid
+NIO,NIO Inc,NIO
+TM,Toyota Motor,Toyota
+HMC,Honda Motor,Honda
+WMT,Walmart Inc,Walmart
+TGT,Target Corporation,Target
+COST,Costco Wholesale,Costco
+HD,Home Depot,Home Depot
+LOW,Lowe's Companies,Lowe's|Lowes
+KR,Kroger Company,Kroger
+DG,Dollar General,Dollar General
+DLTR,Dollar Tree,Dollar Tree
+BBY,Best Buy Co,Best Buy
+M,Macy's Inc,Macy's|Macys
+JWN,Nordstrom Inc,Nordstrom
+GPS,Gap Inc,Gap
+LULU,Lululemon Athletica,Lululemon
+NKE,Nike Inc,Nike
+UAA,Under Armour,Under Armour
+KO,Coca-Cola Company,Coca-Cola|Coke
+PEP,PepsiCo Inc,Pepsi|PepsiCo
+MCD,McDonald's Corporation,McDonald's|McDonalds
+SBUX,Starbucks Corporation,Starbucks
+CMG,Chipotle Mexican Grill,Chipotle
+YUM,Yum! Brands,KFC|Taco Bell|Pizza Hut
+DPZ,Domino's Pizza,Domino's|Dominos
+DIS,Walt Disney Company,Disney
+CMCSA,Comcast Corporation,Comcast|NBC|Universal|MSNBC
+PARA,Paramount Global,Paramount|CBS
+WBD,Warner Bros. Discovery,Warner Bros|CNN|HBO|Discovery
+FOXA,Fox Corporation,Fox|Fox News
+NWSA,News Corp,News Corp|Wall Street Journal|WSJ|Dow Jones
+NYT,New York Times Company,New York Times|NYT
+T,AT&T Inc,AT&T|ATT
+VZ,Verizon Communications,Verizon
+TMUS,T-Mobile US,T-Mobile|TMobile
+PFE,Pfizer Inc,Pfizer
+JNJ,Johnson & Johnson,Johnson & Johnson|J&J
+MRK,Merck & Co,Merck
+LLY,Eli Lilly,Eli Lilly|Lilly
+ABBV,AbbVie Inc,AbbVie
+BMY,Bristol-Myers Squibb,Bristol-Myers|Bristol Myers
+AMGN,Amgen Inc,Amgen
+GILD,Gilead Sciences,Gilead
+MRNA,Moderna Inc,Moderna
+BNTX,BioNTech SE,BioNTech
+NVAX,Novavax Inc,Novavax
+REGN,Regeneron Pharmaceuticals,Regeneron
+CVS,CVS Health,CVS
+WBA,Walgreens Boots Alliance,Walgreens
+UNH,UnitedHealth Group,UnitedHealth
+ANTM,Elevance Health,Elevance|Anthem
+CI,Cigna Group,Cigna
+HUM,Humana Inc,Humana
+HCA,HCA Healthcare,HCA
+GE,General Electric,General Electric|GE
+GEV,GE Vernova,GE Vernova
+HON,Honeywell International,Honeywell
+MMM,3M Company,3M
+CAT,Caterpillar Inc,Caterpillar
+DE,Deere & Company,Deere|John Deere
+CMI,Cummins Inc,Cummins
+PCAR,PACCAR Inc,PACCAR|Peterbilt|Kenworth
+WHR,Whirlpool Corporation,Whirlpool
+NUE,Nucor Corporation,Nucor
+CLF,Cleveland-Cliffs Inc,Cleveland-Cliffs|Cleveland Cliffs
+X,United States Steel,U.S. Steel|US Steel|United States Steel
+STLD,Steel Dynamics,Steel Dynamics
+RS,Reliance Inc,
+AA,Alcoa Corporation,Alcoa
+FCX,Freeport-McMoRan,Freeport-McMoRan|Freeport
+NEM,Newmont Corporation,Newmont
+GOLD,Barrick Gold,Barrick Gold|Barrick
+UPS,United Parcel Service,UPS|United Parcel
+FDX,FedEx Corporation,FedEx
+DAL,Delta Air Lines,Delta Air Lines|Delta Airlines
+AAL,American Airlines Group,American Airlines
+UAL,United Airlines Holdings,United Airlines
+LUV,Southwest Airlines,Southwest Airlines
+JBLU,JetBlue Airways,JetBlue
+ALK,Alaska Air Group,Alaska Airlines
+CCL,Carnival Corporation,Carnival Cruise|Carnival
+RCL,Royal Caribbean Cruises,Royal Caribbean
+NCLH,Norwegian Cruise Line,Norwegian Cruise
+MAR,Marriott International,Marriott
+HLT,Hilton Worldwide,Hilton
+H,Hyatt Hotels,Hyatt
+LVS,Las Vegas Sands,Las Vegas Sands|Sands
+MGM,MGM Resorts International,MGM
+WYNN,Wynn Resorts,Wynn
+CZR,Caesars Entertainment,Caesars
+DD,DuPont de Nemours,DuPont
+DOW,Dow Inc,Dow Chemical
+PG,Procter & Gamble,Procter & Gamble|P&G
+CL,Colgate-Palmolive,Colgate
+KMB,Kimberly-Clark,Kimberly-Clark
+PM,Philip Morris International,Philip Morris
+MO,Altria Group,Altria|Marlboro
+BUD,Anheuser-Busch InBev,Anheuser-Busch|Budweiser|Bud Light
+STZ,Constellation Brands,Constellation Brands
+TAP,Molson Coors Beverage,Molson Coors|Coors
+ARM,Arm Holdings,Arm Holdings|Arm
+TSM,Taiwan Semiconductor Manufacturing,TSMC|Taiwan Semiconductor
+BABA,Alibaba Group,Alibaba
+JD,JD.com Inc,JD.com
+PDD,PDD Holdings,Temu|Pinduoduo
+BIDU,Baidu Inc,Baidu
+NTES,NetEase Inc,NetEase
+TCEHY,Tencent Holdings,Tencent
+SONY,Sony Group Corporation,Sony
+SMCI,Super Micro Computer,Super Micro|Supermicro
+CRWD,CrowdStrike Holdings,CrowdStrike
+NET,Cloudflare Inc,Cloudflare
+ZS,Zscaler Inc,Zscaler
+DDOG,Datadog Inc,Datadog
+MDB,MongoDB Inc,MongoDB
+TEAM,Atlassian Corporation,Atlassian
+HOOD,Robinhood Markets,Robinhood
+SOFI,SoFi Technologies,SoFi
+AFRM,Affirm Holdings,Affirm
+RDDT,Reddit Inc,Reddit

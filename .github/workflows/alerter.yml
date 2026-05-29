@@ -39,6 +39,12 @@ jobs:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
           FACTBASE_API_KEY: ${{ secrets.FACTBASE_API_KEY }}
+          # Daily heartbeat push. HEARTBEAT_HOUR is in local time defined by
+          # HEARTBEAT_TZ_OFFSET (hours from UTC). Default below = 9am US Eastern.
+          # Set HEARTBEAT=0 to disable the daily ping entirely.
+          HEARTBEAT: "1"
+          HEARTBEAT_HOUR: "9"
+          HEARTBEAT_TZ_OFFSET: "-5"
           DEBUG: "1"
         run: python alerter.py
 

@@ -61,11 +61,13 @@ FACTBASE_REMARKS_URL = "https://api.factba.se/rest/json/trump/calendar"  # adjus
 
 USER_AGENT = "trump-ticker-alerter/1.0 (+https://github.com/your/repo)"
 
-# Tickers that look like common English words — require $ prefix or all-caps context.
+# Tickers that look like common English words — require a $ prefix to match as a
+# ticker (e.g. "$NEW"). This prevents bare common words from being read as
+# tickers; a real stock reference must use the cashtag form.
 AMBIGUOUS_TICKERS = {
-    "A", "ALL", "ARE", "AS", "AT", "BE", "BY", "C", "DO", "FOR", "GO", "HAS",
+    "A", "ALL", "ARE", "AS", "AT", "BE", "BY", "C", "DO", "FOR", "GO", "GOLD", "HAS",
     "HE", "IT", "IS", "M", "NEW", "NO", "ON", "ONE", "OR", "OUT", "RE", "SEE",
-    "SO", "T", "TWO", "UP", "US", "V", "WE", "WHO", "X", "Y", "Z", "F", "K",
+    "SO", "T", "TWO", "UP", "UPS", "US", "V", "WE", "WHO", "X", "Y", "Z", "F", "K",
     "L", "O", "Q", "R", "S",
 }
 
@@ -84,7 +86,31 @@ COMMON_WORD_NAMES = {
     "Discover": ["Discover Financial", "Discover card", "credit card"],
     "Visa": ["Visa Inc", "Visa card", "credit card", "payment"],
     "Shell": ["Shell oil", "Shell plc", "Shell gas", "gasoline", "petroleum"],
+    # UPS is also the word "ups". Bare ticker is disabled (see AMBIGUOUS_TICKERS);
+    # the "UPS" alias is matched case-sensitively AND requires shipping context,
+    # so "UPS AND DOWNS" in all caps won't false-positive.
+    "UPS": ["package", "packages", "delivery", "deliver", "parcel", "shipping",
+            "ship", "United Parcel", "FedEx", "Teamsters", "driver", "logistics"],
+    # "News Corp" strips to the generic word "News" — require context so it
+    # doesn't fire on "Fake News", "the news", etc.
+    "News": ["News Corp", "Wall Street Journal", "WSJ", "Dow Jones", "Murdoch", "Rupert"],
+    # "Dow Inc" strips to "Dow", which collides with the Dow Jones index.
+    # Require chemical-company context.
+    "Dow": ["Dow Chemical", "Dow Inc", "chemical", "chemicals", "DuPont"],
+    # Gold the COMMODITY (not a company). Trump uses "gold" constantly in
+    # non-financial ways ("golden age", "Gold Star families", "gold medal",
+    # gold decor). Only fire when clear money/commodity context is present.
+    "Gold": ["ounce", "ounces", "per ounce", "troy", "bullion", "Fort Knox",
+             "gold standard", "gold reserves", "gold price", "gold prices",
+             "price of gold", "spot price", "gold futures", "gold bar",
+             "gold bars", "central bank", "all-time high", "record high",
+             "buy gold", "buying gold", "hedge", "inflation"],
 }
+
+# Common-word names that must ALWAYS require their context words and must never
+# be relaxed by pass-2 disambiguation. (Gold is far too noisy to ever match
+# just because some other company appears in the same post.)
+ALWAYS_STRICT_NAMES = {"Gold"}
 
 
 # ---------------------------------------------------------------------------
@@ -330,6 +356,9 @@ def find_matches(text: str, companies: list[Company]) -> list[Match]:
             continue
 
         # Defer for pass 2 if it has a common-word name that was rejected.
+        # Always-strict names (e.g. Gold) are never relaxed, so never deferred.
+        if c.name in ALWAYS_STRICT_NAMES:
+            continue
         if c.name in COMMON_WORD_NAMES or any(a in COMMON_WORD_NAMES for a in c.aliases):
             deferred.append(c)
 
@@ -369,8 +398,16 @@ def _name_hit(text: str, name: str, strict: bool = True) -> str | None:
     if not base:
         return None
 
+    # Acronym-style names/aliases (all letters uppercase, e.g. "UPS", "GE",
+    # "J&J", "AT&T") are matched CASE-SENSITIVELY. Companies are always written
+    # with proper acronym casing, so this avoids matching common lowercase words
+    # like "ups" in "ups and downs" while keeping real "UPS" mentions.
+    letters = [ch for ch in base if ch.isalpha()]
+    is_acronym = bool(letters) and all(ch.isupper() for ch in letters)
+    flags = 0 if is_acronym else re.IGNORECASE
+
     pattern = rf"\b{re.escape(base)}\b"
-    if not re.search(pattern, text, re.IGNORECASE):
+    if not re.search(pattern, text, flags):
         return None
 
     if strict and base in COMMON_WORD_NAMES:
@@ -529,23 +566,62 @@ def main() -> int:
 # Self-test mode
 # ---------------------------------------------------------------------------
 
+# Each case: (post text, expected set of matched tickers).
 SAMPLE_POSTS = [
-    # Expected matches: TSLA, F, GM
-    "Tesla is doing GREAT things in America. Ford and General Motors better step up!",
-    # Expected match: AAPL (via context "iPhone" disambiguating "Apple")
-    "Tim Cook of Apple just called me. The iPhone is incredible!",
-    # Expected NO matches (Apple alone with no context)
-    "I love apple pie, the best in the world. Many people are saying it.",
-    # Expected match: X (US Steel via alias)
-    "We will not let Japan buy U.S. Steel. American jobs first!",
-    # Expected match: DJT
-    "Truth Social is exploding! TMTG is the future of free speech.",
-    # Expected matches: BA, LMT
-    "Boeing must do better. Lockheed Martin builds the greatest fighter jets in the world.",
-    # Expected match: $NVDA (dollar prefix)
-    "Big things happening with $NVDA. Jensen is a friend of mine.",
-    # Expected NO matches (Target as verb with no retail context)
-    "They will target us no matter what we do, but we keep winning.",
+    ("Tesla is doing GREAT things in America. Ford and General Motors better step up!",
+     {"TSLA", "F", "GM"}),
+    ("Tim Cook of Apple just called me. The iPhone is incredible!",
+     {"AAPL"}),
+    ("I love apple pie, the best in the world. Many people are saying it.",
+     set()),
+    ("We will not let Japan buy U.S. Steel. American jobs first!",
+     {"X"}),
+    # DJT is no longer tracked: neither its names nor its cashtag should match
+    ("Truth Social is exploding! TMTG is the future of free speech.",
+     set()),
+    # Trump's "DJT" sign-off (his initials) must NOT match anything
+    ("The Witch Hunt continues, but we will WIN like never before. Thank you! DJT",
+     set()),
+    # ...even when a real company is named in the same post
+    ("Tesla is building the most incredible cars in the World. MAGA! DJT!",
+     {"TSLA"}),
+    # the DJT cashtag is no longer tracked either
+    ("$DJT is going to the moon, the best investment in America!",
+     set()),
+    ("Boeing must do better. Lockheed Martin builds the greatest fighter jets in the world.",
+     {"BA", "LMT"}),
+    ("Big things happening with $NVDA. Jensen is a friend of mine.",
+     {"NVDA"}),
+    ("They will target us no matter what we do, but we keep winning.",
+     set()),
+    # --- UPS false-positive regression cases ---
+    # lowercase "ups" must NOT match the UPS ticker/alias
+    ("The market has its ups and downs, but we are WINNING like never before!",
+     set()),
+    # all-caps "UPS" with no shipping context must NOT match (Trump loves caps)
+    ("So many UPS AND DOWNS in the Fake News media, but the people see the TRUTH!",
+     set()),
+    # legitimate UPS mention WITH shipping context SHOULD match
+    ("UPS is hiring thousands of new delivery drivers all across America. Great!",
+     {"UPS"}),
+    # --- Gold (commodity) regression cases ---
+    # real commodity context SHOULD match
+    ("Gold just hit an all-time high, over $3,000 an ounce. Incredible!",
+     {"GOLD"}),
+    ("We are bringing back the gold standard and refilling our gold reserves.",
+     {"GOLD"}),
+    ("$GOLD is the best store of value in the World!",
+     {"GOLD"}),
+    # everyday non-financial "gold" must NOT match
+    ("Our brave Gold Star families deserve everything. God bless them all!",
+     set()),
+    ("Team USA won the GOLD medal! What a tremendous victory for our Country.",
+     set()),
+    ("It will be a new GOLDEN AGE for America, the likes of which we've never seen.",
+     set()),
+    # pass-2 leak check: a real company + casual "gold" must NOT pull in GOLD
+    ("Tesla is crushing it, and our athletes are bringing home gold medals!",
+     {"TSLA"}),
 ]
 
 
@@ -553,14 +629,23 @@ def selftest() -> int:
     companies = load_companies()
     print(f"Loaded {len(companies)} companies\n")
     total_hits = 0
-    for i, text in enumerate(SAMPLE_POSTS, 1):
+    failures = 0
+    for i, (text, expected) in enumerate(SAMPLE_POSTS, 1):
         hits = find_matches(text, companies)
         total_hits += len(hits)
+        got = {m.company.ticker for m in hits}
         hit_strs = [f"{m.company.ticker}({m.matched_term})" for m in hits] or ["(none)"]
-        print(f"{i}. {text}")
-        print(f"   -> {', '.join(hit_strs)}\n")
-    print(f"Total matches: {total_hits}")
-    return 0
+        ok = got == expected
+        if not ok:
+            failures += 1
+        status = "PASS" if ok else "FAIL"
+        print(f"{i}. [{status}] {text}")
+        print(f"   -> {', '.join(hit_strs)}")
+        if not ok:
+            print(f"   !! expected {sorted(expected) or '(none)'}, got {sorted(got) or '(none)'}")
+        print()
+    print(f"Total matches: {total_hits}  |  {len(SAMPLE_POSTS) - failures}/{len(SAMPLE_POSTS)} cases passed")
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":
